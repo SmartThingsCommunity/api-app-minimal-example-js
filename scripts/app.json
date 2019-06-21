@@ -1,0 +1,22 @@
+{
+    "appName": "bobs-simple-oauth-example-2a",
+    "displayName": "Simple SmartThings OAuth Example 2",
+    "description": "Demonstrates SmartThings OAuth apps",
+    "singleInstance": false,
+    "appType": "API_ONLY",
+    "classifications": [
+        "AUTOMATION"
+    ],
+    "apiOnly": {
+        "targetUrl": "https://smartthings-oauth.ngrok.io"
+    },
+    "oauth": {
+        "clientName": "Simple SmartThings OAuth Example 2",
+        "scope": [
+            "r:locations:*",
+            "r:scenes:*",
+            "x:scenes:*"
+        ],
+        "redirectUris": ["https://smartthings-oauth.ngrok.io/oauth/callback"]
+    }
+}

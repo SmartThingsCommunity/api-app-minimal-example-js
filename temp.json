@@ -1,0 +1,9 @@
+{
+  "clientName": "Virtual Device Manager (Webhook)",
+  "scope": [
+    "i:deviceprofiles",
+    "r:scenes:*",
+    "x:scenes:*"
+  ],
+  "redirectUris": []
+}

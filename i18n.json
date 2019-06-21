@@ -1,0 +1,14 @@
+{
+    "tag": "en",
+    "components": {
+      "main": {
+        "label": "Main"
+      },
+      "ch1": {
+        "label": "Channel 1"
+      },
+      "ch2": {
+        "label": "Channel 2"
+      }
+    }
+  }

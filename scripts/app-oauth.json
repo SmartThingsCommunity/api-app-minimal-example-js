@@ -1,0 +1,11 @@
+{
+  "clientName": "Simple SmartThings OAuth Example",
+  "scope": [
+    "r:locations:*",
+    "r:scenes:*",
+    "x:scenes:*"
+  ],
+  "redirectUris": [
+    "https://smartthings-oauth.ngrok.io/oauth/callback"
+  ]
+}
