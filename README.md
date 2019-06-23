@@ -4,8 +4,12 @@
 
 This simple NodeJS Express app illustrates how to create an "API Only" application that connects to your SmartThings
 account with OAuth2 and allows you to execute scenes. It's a very simple app that stores the access and refresh tokens
-in session state. By default it uses the express-session InMemory session store, so you will lose your session data
-when you restart the server, but you can use another session store to make the session persist between server
+in session state. By default it uses the 
+[express-session](https://www.npmjs.com/package/express-session#compatible-session-stores) in-memory session store, 
+so you will lose your session data
+when you restart the server, but you can use another 
+[compatible session store](https://www.npmjs.com/package/express-session#compatible-session-stores)
+to make the session persist between server
 restarts. This example uses the 
 [@SmartThings/SmartApp](https://www.npmjs.com/package/@smartthings/smartapp) SDK NPM module for making the
 API calls to list and execute scenes.
