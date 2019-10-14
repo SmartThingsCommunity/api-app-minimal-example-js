@@ -16,7 +16,10 @@ const redirectUri = `${process.env.URL}/oauth/callback`;
 const scope = encodeUrl('r:locations:* r:scenes:* x:scenes:*');
 
 /* SmartThings API */
-const smartApp = new SmartApp();
+const smartApp = new SmartApp()
+	.clientId(clientId)
+	.clientSecret(clientSecret)
+	.redirectUri(redirectUri)
 
 /* Webserver setup */
 const server = express();
@@ -57,7 +60,7 @@ server.get('/', function (req, res) {
 		})
 	}
 	else {
-		// No context cookie. Displey link to authenticate with SmartThings
+		// No context cookie. Display link to authenticate with SmartThings
 		res.render('index', {
 			url: `https://api.smartthings.com/oauth/authorize?client_id=${clientId}&scope=${scope}&response_type=code&redirect_uri=${redirectUri}`
 		})
@@ -84,45 +87,23 @@ server.post('/scenes/:sceneId', function (req, res) {
 
 /* Handles OAuth redirect */
 server.get('/oauth/callback', async (req, res) => {
-	// Exchange the code for the auth token
-	const body = await rp.post('https://api.smartthings.com/oauth/token', {
-		headers: {
-			Authorization: `Basic ${Buffer.from(clientId + ":" + clientSecret).toString("base64")}`
-		},
-		form: {
-			client_id: clientId,
-			code: req.query.code,
-			grant_type: 'authorization_code',
-			redirect_uri: redirectUri
-		}
-	});
-
-	// Initialize the SmartThings API context
-	const data = JSON.parse(body)
-	let ctx = await smartApp.withContext({
-		installedAppId: data.installed_app_id,
-		authToken: data.access_token,
-		refreshToken: data.refresh_token
-	});
-
-	// Get the location ID from the installedAppId (would be nice if it was already in the response)
-	const isa = await ctx.api.installedApps.get(data.installed_app_id);
+	// Exchange the code for the auth token. Returns an API context that can be used for subsequent calls
+	const ctx = await smartApp.handleOAuthCallback(req)
 
 	// Get the location name
-	const location = await ctx.api.locations.get(isa.locationId);
+	const location = await ctx.api.locations.get();
 
 	// Set the cookie with the context, including the location ID and name
 	req.session.smartThings = {
-		locationId: isa.locationId,
+		locationId: ctx.locationId,
 		locationName: location.name,
-		installedAppId: data.installed_app_id,
-		authToken: data.access_token,
-		refreshToken: data.refresh_token
+		installedAppId: ctx.installedAppId,
+		authToken: ctx.api.client.authToken,
+		refreshToken: ctx.api.client.refreshToken
 	};
 
 	// Redirect back to the main mage
 	res.redirect('/')
-
 });
 
 server.listen(port);
