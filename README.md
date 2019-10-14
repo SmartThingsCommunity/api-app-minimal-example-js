@@ -42,13 +42,13 @@ curl -X POST -H "Authorization: Bearer {REPLACE-WITH-YOUR-PAT-TOKEN}" \
       "r:scenes:*",
       "x:scenes:*"
     ],
-    "redirectUris": ["{REPLACE-WITH-YOUR-TUNNEL-URL}/oauth/callback"]
+    "redirectUris": ["http://localhost:3000/oauth/callback"]
   }
 }'
 ```
 
-Save the response somewhere. Put the `oauthClientId` and `oauthClientSecret` fields from that response in the `.env` 
-file as `CLIENT_ID` and `CLIENT_SECRET`.
+Save the response somewhere. Copy `.env-example` into a file named `.env` and put the `oauthClientId` and `oauthClientSecret` 
+fields from that response into the `CLIENT_ID` and `CLIENT_SECRET` properties.
 
 ### Start the server
 ```bash

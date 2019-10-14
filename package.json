@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node server.js"
   },
   "dependencies": {
-    "@smartthings/smartapp": "^1.2.1",
+    "@smartthings/smartapp": "^1.8.1",
     "dotenv": "^8.0.0",
     "ejs": "~2.5.7",
     "encodeurl": "^1.0.2",
