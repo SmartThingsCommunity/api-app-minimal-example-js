@@ -9,11 +9,12 @@ const encodeUrl = require('encodeurl');
 const rp = require('request-promise-native');
 const SmartApp = require('@smartthings/smartapp');
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000
+const serverUrl = process.env.URL || `http://localhost:${port}`
+const redirectUri = `${serverUrl}/oauth/callback`;
+const scope = encodeUrl('r:locations:* r:scenes:* x:scenes:*');
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
-const redirectUri = `${process.env.URL}/oauth/callback`;
-const scope = encodeUrl('r:locations:* r:scenes:* x:scenes:*');
 
 /* SmartThings API */
 const smartApp = new SmartApp()
@@ -107,5 +108,5 @@ server.get('/oauth/callback', async (req, res) => {
 });
 
 server.listen(port);
-console.log(`Open:     ${process.env.URL}`);
-console.log(`Callback: ${process.env.URL}/oauth/callback`);
+console.log(`\nWebsite URL -- Use this URL to log into SmartThings and connect this app to your account:\n${serverUrl}\n`);
+console.log(`Redirect URI -- Copy this value into the "Redirection URI(s)" field in the Developer Worspace:\n${redirectUri}`);
