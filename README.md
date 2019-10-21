@@ -14,53 +14,23 @@ restarts. This example uses the
 [@SmartThings/SmartApp](https://www.npmjs.com/package/@smartthings/smartapp) SDK NPM module for making the
 API calls to list and execute scenes.
 
-## Quickstart
+## Files and directories 
 
-### Register your app
+- public
+  - stylesheets -- stylesheets used by the web pages
+- views
+  - error.ejs -- error page
+  - index.ejs -- initial page with link to connect to SmartThings
+  - scenes.ejs -- page that displays scenes and allows them to be executed
+- server.js -- the Express server and SmartApp
+- .env -- file you create with AWS and app credentials
 
-- Get a personal token with at least `w:apps` scope from [https://account.smartthings.com/tokens](https://account.smartthings.com/tokens)
+## Getting Started
 
-- Register the app by replacing the `Authorization` header, `appName`, `targetUrl` and `redirectUris` fields and running 
-the following command :
+### Prerequisites
+- Approval to create an _API Access_ app in the SmartThings Developer Workspace. Submit requests for approval using
+[this form](https://smartthings.developer.samsung.com/oauth-request)
+- A [Glitch](https://glitch.com) account if you are following these instructions as written. Alternatly you can install
+[Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) locally and use a tool like
+[ngrok](https://ngrok.com/) to create a tunnel to a publically accessible HTTPS URL
 
-```bash
-curl -X POST -H "Authorization: Bearer {REPLACE-WITH-YOUR-PAT-TOKEN}" \
-"https://api.smartthings.com/apps" \
--d '{
-  "appName": "{REPLACE-WITH-YOUR-APP-NAME}",
-  "displayName": "Simple API App Example",
-  "description": "Demonstrates basics of a SmartThings API app which authenticates with the SmartThings platform using OAuth2",
-  "singleInstance": false,
-  "appType": "API_ONLY",
-  "classifications": [
-    "AUTOMATION"
-  ],
-  "oauth": {
-    "clientName": "Simple API App Example",
-    "scope": [
-      "r:locations:*",
-      "r:scenes:*",
-      "x:scenes:*"
-    ],
-    "redirectUris": ["http://localhost:3000/oauth/callback"]
-  }
-}'
-```
-
-Save the response somewhere. Copy `.env-example` into a file named `.env` and put the `oauthClientId` and `oauthClientSecret` 
-fields from that response into the `CLIENT_ID` and `CLIENT_SECRET` properties.
-
-### Start the server
-```bash
-node server.js
-```
-
-### Authenticate with SmartThings and execute scenes
-
-1. Open a browser to your your public server tunnel URL
-2. Click the "Connect to SmartThings" link on the page
-3. Log in to your SmartThings account
-4. Select a location and authorize the app
-
-You will then see a page with all the scenes defined for that location. Clicking on a scene name should make an API call 
-to execute the scene.
