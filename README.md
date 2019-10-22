@@ -28,16 +28,15 @@ API calls to list and execute scenes.
 ## Getting Started
 
 ### Prerequisites
+- A [Samsung Developer Workspace account](https://smartthings.developer.samsung.com/workspace/) with _API Access_ app approval. 
+Submit requests for approval using
+[this form](https://smartthings.developer.samsung.com/oauth-request)
+
 - [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) installed
 
 - [ngrok](https://ngrok.com/) or similar tool to create a secure tunnel to a publically available URL (This is
 required because the Developer Workspace does not allow HTTP or localhost in callback URLs. As an alternative, 
 you can edit your local machine's _hosts_ file so that your app can have a redirect URL that isn't _localhost_).
-
-- A [Samsung Developer Workspace account](https://smartthings.developer.samsung.com/workspace/) with _API Access_ app approval. 
-Submit requests for approval using
-[this form](https://smartthings.developer.samsung.com/oauth-request)
-
 
 ## Instructions
 
@@ -60,10 +59,10 @@ SERVER_URL=https://your-subdomain-name.ngrok.io
 node server.js
 
 Website URL -- Use this URL to log into SmartThings and connect this app to your account:
-http://localhost:3000
+https://your-subdomain-name.ngrok.io
 
 Redirect URI -- Copy this value into the "Redirection URI(s)" field in the Developer Workspace:
-http://localhost:3000/oauth/callback
+https://your-subdomain-name.ngrok.io/oauth/callback
 ```
 
 - Go to the [SmartThings Developer Workspace](https://smartthings.developer.samsung.com/workspace) and create an new
@@ -123,5 +122,6 @@ node server.js
 ```
 
 - Go to webside URL from the server log, log in with your SmartThings account credentials, and 
-choose a location. If you haven't already done so you should create some scenes so that you can execute them with 
-the app.
+choose a location. You should see a page with the location name as a header and button for 
+each scene in that location. Clicking the button should execute the scene. If you don't see
+any buttons you may need to create some scenes using the SmartThings mobile app.

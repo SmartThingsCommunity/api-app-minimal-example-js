@@ -10,14 +10,16 @@ const rp = require('request-promise-native');
 const SmartApp = require('@smartthings/smartapp');
 
 const port = process.env.PORT || 3000
-const serverUrl = process.env.URL || `https://${process.env.PROJECT_DOMAIN}.glitch.me`
+const serverUrl = process.env.SERVER_URL || 'http://localhost:3000'
 const redirectUri = `${serverUrl}/oauth/callback`;
 const scope = encodeUrl('r:locations:* r:scenes:* x:scenes:*');
+const appId = process.env.APP_ID
 const clientId = process.env.CLIENT_ID;
 const clientSecret = process.env.CLIENT_SECRET;
 
 /* SmartThings API */
 const smartApp = new SmartApp()
+	.appId(appId)
 	.clientId(clientId)
 	.clientSecret(clientSecret)
 	.redirectUri(redirectUri)
