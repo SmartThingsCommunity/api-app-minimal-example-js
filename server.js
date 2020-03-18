@@ -101,8 +101,8 @@ server.get('/oauth/callback', async (req, res) => {
 		locationId: ctx.locationId,
 		locationName: location.name,
 		installedAppId: ctx.installedAppId,
-		authToken: ctx.api.client.authToken,
-		refreshToken: ctx.api.client.refreshToken
+		authToken: ctx.authToken,
+		refreshToken: ctx.refreshToken
 	};
 
 	// Redirect back to the main mage

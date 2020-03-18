@@ -74,40 +74,6 @@ has not yet been approved.
 Use the _Redirect URI_ value printed out in the server log and specify the 
 `r:locations:*`, `r:scenes:*`, and `x:scenes:*` scopes.
 
->NOTE: If you do not see options for the `r:scenes:*` and `x:scenes:*` scopes in the Developer Workspace, add then
->to your app with the following steps:
->- Get a personal token with at least `w:apps` scope from [https://account.smartthings.com/tokens](https://account.smartthings.com/tokens)
->
->- Save the current OAuth information for you app by running the following command, substituting your PAT_TOKEN and APP_ID. You can
->get your APP_ID from the Developer Workspace
-> ```$bash
-> curl -H "Authorization: Bearer {PAT_TOKEN}" \
->      https://api.smartthings.com/apps/{APP_ID}/oauth > oauth.json
-> ```
->
-> - Edit the `oauth.json` file to add the scenes scopes. It should look something like this:
->```$json
-> {
->     "clientName": "API App Minimal example",
->     "scope": [
->       "r:locations:*",
->       "r:scenes:*",
->       "x:scenes:*"
->     ],
->     "redirectUris": [
->       "https://something-or-the-other.glith.me/oauth/callback"
->     ]
->   }
->```
->
-> - Update your app with the new OAuth scopes:
->```$bash
-> curl -X PUT -H "Authorization: Bearer {PAT_TOKEN}" \
->      -d @oauth.json \
->      https://api.smartthings.com/apps/{APP_ID}/oauth
->```
->
-
 - Add the _CLIENT_ID_ and _CLIENT_SECRET_ properties from the Developer Workspace to your `.env` file. 
 For example:
 ```$bash

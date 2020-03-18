@@ -19,7 +19,7 @@
 <h1><%= locationName %> Scenes</h1>
 <p><%= errorMessage %></p>
 <div class="list-group">
-    <% scenes.items.forEach(function(scene){ %>
+    <% scenes.forEach(function(scene){ %>
     <a href="#" id="<%= scene.sceneId %>" class="list-group-item list-group-item-action">
         <%= scene.sceneName %>
     </a>

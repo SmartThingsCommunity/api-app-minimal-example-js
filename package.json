@@ -6,7 +6,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@smartthings/smartapp": "^1.13.5",
+    "@smartthings/smartapp": "^2.0.0",
     "dotenv": "^8.0.0",
     "ejs": "~2.5.7",
     "encodeurl": "^1.0.2",
