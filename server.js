@@ -73,7 +73,7 @@ server.get('/', function (req, res) {
 /* Uninstalls app and clears context cookie */
 server.get('/logout', async function(req, res) {
 	const ctx = await smartApp.withContext(req.session.smartThings)
-	await ctx.api.installedApps.deleteInstalledApp()
+	await ctx.api.installedApps.delete()
 	req.session.destroy(err => {
 		res.redirect('/')
 	})

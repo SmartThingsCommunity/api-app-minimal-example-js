@@ -6,13 +6,13 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "@smartthings/smartapp": "^2.0.0",
-    "dotenv": "^8.0.0",
-    "ejs": "~2.5.7",
+    "@smartthings/smartapp": "^2.4.3",
+    "dotenv": "^8.2.0",
+    "ejs": "~3.1.5",
     "encodeurl": "^1.0.2",
-    "express": "~4.16.0",
-    "express-session": "^1.16.2",
-    "morgan": "~1.9.0",
+    "express": "~4.17.1",
+    "express-session": "^1.17.1",
+    "morgan": "~1.10.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.7"
   }
