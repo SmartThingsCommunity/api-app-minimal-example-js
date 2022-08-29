@@ -6,7 +6,6 @@ const session = require("express-session");
 const path = require('path');
 const morgan = require('morgan');
 const encodeUrl = require('encodeurl');
-const rp = require('request-promise-native');
 const SmartApp = require('@smartthings/smartapp');
 
 const port = process.env.PORT || 3000
@@ -74,7 +73,7 @@ server.get('/', function (req, res) {
 server.get('/logout', async function(req, res) {
 	const ctx = await smartApp.withContext(req.session.smartThings)
 	await ctx.api.installedApps.delete()
-	req.session.destroy(err => {
+	req.session.destroy(() => {
 		res.redirect('/')
 	})
 });
