@@ -22,6 +22,7 @@ const smartApp = new SmartApp()
 	.clientId(clientId)
 	.clientSecret(clientSecret)
 	.redirectUri(redirectUri)
+	.enableEventLogging(2)
 
 /* Webserver setup */
 const server = express();
