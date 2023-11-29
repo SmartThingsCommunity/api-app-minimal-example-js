@@ -1,12 +1,12 @@
 {
-  "name": "simple-oauth-example",
-  "version": "0.0.0",
+  "name": "api-app-minimal-example-js",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node server.js"
   },
   "dependencies": {
-    "@smartthings/smartapp": "^3.0.0dotenv",
+    "@smartthings/smartapp": "^4.3.1",
     "dotenv": "^16.0.1",
     "ejs": "~3.1.8",
     "encodeurl": "^1.0.2",
