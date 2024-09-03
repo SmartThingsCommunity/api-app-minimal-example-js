@@ -3,8 +3,8 @@
 ## Overview
 
 This simple NodeJS Express app illustrates how to create an _API Access_ SmartApp that connects to your SmartThings
-account with OAuth2 and allows you to execute scenes. It's a very simple app that stores the access and refresh tokens
-in session state. By default it uses the 
+account with OAuth2 and allows you to execute manually run routines (which are called "scenes" in the API). 
+It's a very simple app that stores the access and refresh tokens in session state. It uses the 
 [express-session](https://www.npmjs.com/package/express-session#compatible-session-stores) in-memory session store, 
 so you will lose your session data
 when you restart the server, but you can use another 
@@ -28,66 +28,88 @@ API calls to list and execute scenes.
 ## Getting Started
 
 ### Prerequisites
-- A [Samsung Developer Workspace account](https://smartthings.developer.samsung.com/workspace/) with _API Access_ app approval. 
-Submit requests for approval using
-[this form](https://smartthings.developer.samsung.com/oauth-request)
+- A [SmartThings](https://smartthings.com) account with at least one location and manually run routines created
 
-- [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) installed
+- The SmartThings CLI installed on your computer
 
-- [ngrok](https://ngrok.com/) or similar tool to create a secure tunnel to a publically available URL (This is
-required because the Developer Workspace does not allow HTTP or localhost in callback URLs. As an alternative, 
-you can edit your local machine's _hosts_ file so that your app can have a redirect URL that isn't _localhost_).
+- [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) installed on your computer
 
 ## Instructions
 
-- Clone [this GitHub repository](https://github.com/SmartThingsCommunity/api-app-minimal-example-js), cd into the
-directory, and install the Node modules with NPM:
+### 1. Clone [this GitHub repository](https://github.com/SmartThingsCommunity/api-app-minimal-example-js), cd into the directory, and install the Node modules with NPM:
 ```$bash
 git clone https://github.com/SmartThingsCommunity/api-app-minimal-example-js.git
 cd api-app-minimal-example-js
 npm install
 ```
 
-- Create a file named `.env` in the project directory and set the base URL of the server to your ngrok URL 
-(or the URL you configured in your local hosts file):
+### 2. Register your app with SmartThings using the CLI
+
+Start with the `smartthings apps:create` command to create a new app. You will be prompted for the required
+information. The following is an example of the output from the command:
+
+```bash
+~ % smartthings apps:create
+? What kind of app do you want to create? (Currently, only OAuth-In apps are supported.) OAuth-In App
+
+More information on writing SmartApps can be found at
+  https://developer.smartthings.com/docs/connected-services/smartapp-basics
+
+? Display Name My API App
+? Description Allows scenes to be executed
+? Icon Image URL (optional) 
+? Target URL (optional) 
+
+More information on OAuth 2 Scopes can be found at:
+  https://www.oauth.com/oauth2-servers/scope/
+
+To determine which scopes you need for the application, see documentation for the individual endpoints you will use in your app:
+  https://developer.smartthings.com/docs/api/public/
+
+? Select Scopes. r:locations:*, r:scenes:*, x:scenes:*
+? Add or edit Redirect URIs. Add Redirect URI.
+? Redirect URI (? for help) http://localhost:3000/oauth/callback
+? Add or edit Redirect URIs. Finish editing Redirect URIs.
+? Choose an action. Finish and create OAuth-In SmartApp.
+Basic App Data:
+─────────────────────────────────────────────────────────────────
+ Display Name     My API App                                     
+ App Id           037bcd6c-xxxx-xxxx-xxxx-xxxxxxxxxxxx           
+ App Name         amyapiapp-a8b20801-xxxx-xxxx-xxxx-xxxxxxxxxxxx 
+ Description      Allows scenes to be executed                   
+ Single Instance  true                                           
+ Classifications  CONNECTED_SERVICE                              
+ App Type         API_ONLY                                       
+─────────────────────────────────────────────────────────────────
+
+
+OAuth Info (you will not be able to see the OAuth info again so please save it now!):
+───────────────────────────────────────────────────────────
+ OAuth Client Id      689f9823-xxxx-xxxx-xxxx-xxxxxxxxxxxx 
+ OAuth Client Secret  3a2c39d8-xxxx-xxxx-xxxx-xxxxxxxxxxxx 
+───────────────────────────────────────────────────────────
+````
+
+### 3. Create a `.env` file in the root directory of the project
+
+Add the `PORT`, `SERVER_URL`, `APP_ID`, `CLIENT_ID`, and `CLIENT_SECRET` properties from the output of the `smartthings apps:create` command. For example:
+
 ```$bash
-SERVER_URL=https://your-subdomain-name.ngrok.io
+PORT=3000
+SERVER_URL=http://localhost:3000
+APP_ID=037bcd6c-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+CLIENT_ID=689f9823-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+CLIENT_SECRET=3a2c39d8-xxxx-xxxx-xxxx-xxxxxxxxxxxx 
 ```
 
-- Start your server and make note of the :
+### 4. Start your server:
 ```$bash
 node server.js
-
-Website URL -- Use this URL to log into SmartThings and connect this app to your account:
-https://your-subdomain-name.ngrok.io
-
-Redirect URI -- Copy this value into the "Redirection URI(s)" field in the Developer Workspace:
-https://your-subdomain-name.ngrok.io/oauth/callback
 ```
 
-- Go to the [SmartThings Developer Workspace](https://smartthings.developer.samsung.com/workspace) and create an new
-[API Access](https://smartthings.developer.samsung.com/workspace/projects/new?type=CPT-OAUTH) project in your organization.
-If the previous link doesn't work and you don't see an option for creating an API access project, then your access
-has not yet been approved. 
+### 5. Connect your app to SmartThings
 
-- After creating the project click the Use the _Register an Application_ link and fill in the fields, and click _Save_. 
-Use the _Redirect URI_ value printed out in the server log and specify the 
-`r:locations:*`, `r:scenes:*`, and `x:scenes:*` scopes.
-
-- Add the _CLIENT_ID_ and _CLIENT_SECRET_ properties from the Developer Workspace to your `.env` file. 
-For example:
-```$bash
-SERVER_URL=https://your-subdomain-name.ngrok.io
-CLIENT_ID=xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx
-CLIENT_SECRET=xxxxxxxx-xxxx-xxxx-xxxxxxxxxxxx
-```
-
-- Restart your server:
-```$bash
-node server.js
-```
-
-- Go to webside URL from the server log, log in with your SmartThings account credentials, and 
+Go to http://localhost:3000, log in with your SmartThings account credentials, and 
 choose a location. You should see a page with the location name as a header and button for 
 each scene in that location. Clicking the button should execute the scene. If you don't see
 any buttons you may need to create some scenes using the SmartThings mobile app.
