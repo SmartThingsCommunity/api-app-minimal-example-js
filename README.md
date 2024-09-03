@@ -30,7 +30,7 @@ API calls to list and execute scenes.
 ### Prerequisites
 - A [SmartThings](https://smartthings.com) account with at least one location and manually run routines created
 
-- The SmartThings CLI installed on your computer
+- The [SmartThings CLI](https://github.com/SmartThingsCommunity/smartthings-cli#readme) installed on your computer
 
 - [Node.js](https://nodejs.org/en/) and [npm](https://www.npmjs.com/) installed on your computer
 
